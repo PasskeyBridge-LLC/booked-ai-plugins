@@ -1,0 +1,22 @@
+{
+  "name": "booked",
+  "displayName": "Booked",
+  "version": "1.0.0",
+  "description": "Look up a shop on Booked, list its services and open times, and book an appointment. Deposits are paid on a Booked-hosted Stripe page.",
+  "author": {
+    "name": "PasskeyBridge LLC",
+    "email": "hello@booked.co"
+  },
+  "homepage": "https://booked.co",
+  "repository": "https://github.com/PasskeyBridge-LLC/booked-ai-plugins",
+  "license": "MIT",
+  "logo": "assets/logo.svg",
+  "keywords": [
+    "booked",
+    "booking",
+    "appointments",
+    "scheduling",
+    "salons",
+    "mcp"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "booked": {
+      "url": "https://booked.co/api/mcp"
+    }
+  }
+}
