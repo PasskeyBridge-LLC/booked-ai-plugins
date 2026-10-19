@@ -27,7 +27,7 @@ By hand, add this to `~/.cursor/mcp.json` (all projects) or `.cursor/mcp.json` (
 ## Connect
 
 1. Cursor opens the Booked sign-in page in your browser. Sign in.
-2. The consent page shows what the connection may do. `bookings:write` is always granted. `shops:write` is optional and is needed only for `set_shop_agent_config`. Approve.
+2. The consent page shows what the connection may do. `bookings:write` is always granted. `shops:write` is optional and is needed for `get_shop_agent_config` and `set_shop_agent_config`. Approve.
 3. The browser returns to Cursor and the Booked tools are available.
 
 Authentication is OAuth with dynamic client registration. No API key or client secret is needed.
@@ -38,27 +38,27 @@ Setup guide: https://booked.co/help/shop-owners/setup/connect-claude
 
 Read-only:
 
-| Tool | What it does |
-|---|---|
-| `get_shop` | Returns a shop's public details. |
-| `list_services` | Lists the services a shop offers. |
-| `get_availability` | Returns open appointment times for a service. |
-| `whoami` | Returns the account the connection is signed in as. |
-| `get_shop_agent_config` | Returns the shop's settings for AI agent bookings. |
+| Tool | What it does | Access |
+|---|---|---|
+| `get_shop` | Retrieve public details for a shop by slug: services, staff, policies and payment settings. | `shops:read` |
+| `list_services` | List the services a shop offers, with price and duration. | `shops:read` |
+| `get_availability` | Open times for a shop on one date. When service_id is set, the result includes the seats left for that group class. | `availability:read` |
+| `whoami` | Return the authenticated principal, its scopes, trust score and the shops it may manage. | Any signed-in connection |
+| `get_shop_agent_config` | Return whether agent bookings are on for a shop, and its daily cap. | Admin, or `shops:write` on a shop this connection manages |
 
 Write:
 
-| Tool | What it does |
-|---|---|
-| `create_booking` | Creates an appointment booking. |
-| `confirm_deposit` | Checks whether the deposit for a booking has been paid. |
-| `set_shop_agent_config` | Updates the shop's settings for AI agent bookings. Requires `shops:write`. |
+| Tool | What it does | Access |
+|---|---|---|
+| `create_booking` | Start a booking that needs the shop's deposit. Returns a hosted payment URL. The customer pays on that page. The booking exists only after the deposit is paid. The amount comes from the shop. Free or unpaid bookings are not allowed. Subject to the shop's agent switch and daily cap, and to the trust score. | `bookings:write` |
+| `confirm_deposit` | Check whether the hosted deposit has been paid and the booking exists. Pass the checkout_session_id from create_booking. Returns the booking reference once Stripe has the payment. | `bookings:write` |
+| `set_shop_agent_config` | Turn agent bookings on or off for a shop, and set or remove its daily cap. At least one field is required. | Admin, or `shops:write` on a shop this connection manages |
 
 ## Example prompts
 
 - What services does this shop on Booked offer, and what do they cost?
 - Which times are open for a haircut next Tuesday afternoon?
-- Book the 3 PM slot and send me the deposit link.
+- Book the 3 PM slot and give me the deposit link.
 
 ## Payments
 
