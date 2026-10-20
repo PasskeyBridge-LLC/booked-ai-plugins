@@ -26,14 +26,16 @@ By hand, add this to `~/.cursor/mcp.json` (all projects) or `.cursor/mcp.json` (
 
 ## Connect
 
-1. Cursor opens the Booked sign-in page in your browser. Sign in with an account that owns at least one shop. Accounts that do not own a shop cannot approve a connection.
+1. Cursor opens the Booked sign-in page in your browser. Sign in with a shop owner account or a customer account. A customer account can approve `bookings:write`.
 2. The consent page lists the scopes. Approve.
 3. The browser returns to Cursor and the Booked tools are available.
+
+Shop owners and customers can revoke a connection from their account.
 
 Scopes:
 
 - `shops:read` and `availability:read` are always granted.
-- `bookings:write` is granted when the client requests it. The consent page shows it checked and you cannot uncheck it; to refuse it, decline the connection.
+- `bookings:write` is granted when the client requests it. The consent page shows it as a list item with no checkbox. To refuse it, decline the connection.
 - `shops:write` is optional. It is granted only when the client requests it and you leave it checked, and it applies only to shops you own. `get_shop_agent_config` and `set_shop_agent_config` need it.
 - `offline_access` is granted when the client requests it.
 
